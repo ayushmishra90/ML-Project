@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iris Flower Prediction</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+
+<h1>Iris Flower Prediction</h1>
+<form id="predictionForm">
+    <label>Sepal Length:</label>
+    <input type="number" id="sepal_length" step="any" required><br>
+
+    <label>Sepal Width:</label>
+    <input type="number" id="sepal_width" step="any" required><br>
+
+    <label>Petal Length:</label>
+    <input type="number" id="petal_length" step="any" required><br>
+
+    <label>Petal Width:</label>
+    <input type="number" id="petal_width" step="any" required><br>
+
+    <button type="button" onclick="getPrediction()">Predict</button>
+</form>
+
+<h2 id="result"></h2>
+<h3 id="accuracy"></h3>
+<img id="flowerImage" src="" alt="" style="display:none; margin-top: 20px; max-width: 200px; height: auto;">
+
+<script>
+    async function getPrediction() {
+        const features = {
+            features: [
+                parseFloat(document.getElementById('sepal_length').value),
+                parseFloat(document.getElementById('sepal_width').value),
+                parseFloat(document.getElementById('petal_length').value),
+                parseFloat(document.getElementById('petal_width').value)
+            ]
+        };
+
+        const response = await fetch('/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(features)
+        });
+
+        const data = await response.json();
+        document.getElementById('result').innerText = `Prediction: ${data.prediction}`;
+        document.getElementById('accuracy').innerText = `Model Accuracy: ${data.accuracy}`;
+        const flowerImage = document.getElementById('flowerImage');
+        flowerImage.src = data.image_url;
+        flowerImage.alt = data.prediction;
+        flowerImage.style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
