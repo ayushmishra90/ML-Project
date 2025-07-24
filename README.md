@@ -75,3 +75,11 @@ Deployed an SVM model for Iris flower classification using Flask, providing a we
 - `accuracy.txt`: Model accuracy.
 - `index.html` and `styles.css`: Web interface files.
 - `static/`: Contains images for Iris flower types.
+
+  ## Demonstration
+
+  
+
+https://github.com/user-attachments/assets/671f7ff6-827a-4538-b0be-089dfba1f59e
+
+
